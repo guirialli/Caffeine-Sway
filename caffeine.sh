@@ -8,6 +8,7 @@
 LOCK_MINUTES=10      # Minutes before screen locks
 SUSPEND_MINUTES=15   # Minutes before system suspends
 LOCK_COLOR="000000"  # Lock screen color
+LOCK_SCREEN_IMAGE="$HOME/Imagens/wallpaper"
 # ==========================
 
 # Convert minutes to seconds
@@ -15,10 +16,11 @@ LOCK_TIMEOUT=$((LOCK_MINUTES * 60))
 SUSPEND_TIMEOUT=$((SUSPEND_MINUTES * 60))
 
 # Command to start normal swayidle
+# you can use if want color 'swaylock -f -c $LOCK_COLOR'
 SWAYIDLE_CMD="swayidle -w \
-    timeout $LOCK_TIMEOUT 'swaylock -f -c $LOCK_COLOR' \
+    timeout $LOCK_TIMEOUT 'swaylock -f -i $LOCK_SCREEN_IMAGE' \ 
     timeout $SUSPEND_TIMEOUT 'systemctl suspend' \
-    before-sleep 'swaylock -f -c $LOCK_COLOR'"
+    before-sleep 'swaylock -f -i $LOCK_SCREEN_IMAGE'"
 
 # Check if swayidle is running
 PID=$(pgrep -x swayidle)
@@ -32,4 +34,6 @@ else
     eval "$SWAYIDLE_CMD" &
     notify-send "☕ Caffeine" "Caffeine mode DEACTIVATED (sleep allowed)"
 fi
+
+
 
